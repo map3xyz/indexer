@@ -1,0 +1,49 @@
+{
+  "name": "@map3xyz/indexer",
+  "version": "0.0.1",
+  "description": "Indexer of crypto assets on supported networks.",
+  "author": "map3xyz",
+  "keywords": [
+    "typescript",
+    "cli",
+    "starter"
+  ],
+  "license": "MIT",
+  "main": "./dist/index.js",
+  "types": "/dist/index.d.ts",
+  "bin": "dist/index.js",
+  "files": [
+    "dist/**/*",
+    "!dist/**/*.test.js"
+  ],
+  "scripts": {
+    "cli": "yarn ts-node ./src/index.ts",
+    "clean": "rimraf ./dist/ ./exec/",
+    "build": "yarn clean && tsc",
+    "preparePublish": "yarn build && npm version patch",
+    "test": "yarn build && ava --verbose",
+    "bundle": "yarn build && pkg . --out-dir ./exec/"
+  },
+  "devDependencies": {
+    "@types/node": "^18.0.0",
+    "ava": "^4.3.0",
+    "pkg": "^5.7.0",
+    "rimraf": "^3.0.2",
+    "ts-node": "^10.8.1",
+    "typescript": "^4.7.4"
+  },
+  "dependencies": {
+    "axios": "^0.27.2",
+    "commander": "^9.3.0",
+    "jsonschema": "^1.4.1"
+  },
+  "packageManager": "yarn@3.2.1",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/map3xyz/indexer.git"
+  },
+  "bugs": {
+    "url": "https://github.com/map3xyz/indexer/issues"
+  },
+  "homepage": "https://github.com/map3xyz/indexer#readme"
+}
