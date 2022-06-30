@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 import { Command } from 'commander'
-import { getDirectories } from './utils/filesystem';
+import { runIndexerTasks } from './tasker';
 var packageJson = require('./../package.json');
 
 const program = new Command();
@@ -11,42 +11,24 @@ program
   .description('Indexer of crypto assets on supported networks')
   .version(packageJson.version)
 
-program.command('validate')
-  .description('Validate that the assets repository is in a valid state')
-  .option('-n --network <string>', 'specific network to validate')
-  .option('-r, --repo <repo>', 'The repo to validate')
+program.command('index')
+  .description('Run through all the tasks specified in tasks.json and index all the assets. Commit them to the repository via the assets-helper.')
+  .option('-n --network <string>', 'The specific network to validate. If not specified all network tasks will be run.')
+  .option('-t, --type <string>', 'The type of tasks to exclusively run. If not specified, all tasks will be run.')
   .action((options) => {
-    // default
-    if(options.repo === '.') {
-      options.repo = process.cwd();
-    }
+    
+    runIndexerTasks(options.network, options.type)
+    .then(results => {
+      for(const result of results) {
+        console.log(`${result.network}: ${result.type} ${result.source} ${result.verified ? 'verified' : 'not verified'}`);
+      }
 
-    // validate(options.network, options.repo)
-    //   .then(result => {
-    //     if (result.valid) {
-    //       console.log('Repository is valid');
-    //       process.exit(0);
-    //     } else {
-    //       console.log(`Repository is invalid. Errors:\n 
-    //         ${result.errors.map(e => e.source + ': ' + e.message).join('\n')}`);
-    //       process.exit(1);
-    //     }
-    //   }).catch(err => { 
-    //       console.error("Error running validate\n", err);
-    //       process.exit(1);
-    //   });
+      process.exit(0);
+    })
+    .catch(err => {
+      console.error("Error running index command\n", err);
+      process.exit(1);
+    });
 });
-
-program.command('readDirs')
-  .option('-r, --repo <repo>', 'The repo to read')
-  .action((options) => {
-     // default
-     if(options.repo === '.') {
-      options.repo = process.cwd();
-    }
-    getDirectories(options.repo)
-    .then(console.log)
-  });
-
 
 program.parse(process.argv);
