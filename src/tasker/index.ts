@@ -1,7 +1,6 @@
 import path from "path";
-import { readAndParseJson } from "../utils/filesystem";
+import { readAndParseJson } from '@map3xyz/assets-helper';
 import { IndexResult } from "./model/IndexResult";
-import { NetworkTask } from "./model/NetworkTask";
 import { IndexerCommandValidationResult, PlannedTasks } from "./model/types";
 
 function validateTaskParams(network: string, type: string): IndexerCommandValidationResult {
@@ -43,12 +42,6 @@ function getPlannedTasks(network: string, type: string): PlannedTasks[] {
     return plannedTasks;
 }
 
-
-function runTask(todo: NetworkTask): Promise<IndexResult> {
-
-    throw new Error("Function not implemented.");
-}
-
 export async function runIndexerTasks(network?: string, type?: string): Promise<IndexResult[]> {
     const validation = validateTaskParams(network, type);
     if (validation.errors.length > 0) {
@@ -59,9 +52,9 @@ export async function runIndexerTasks(network?: string, type?: string): Promise<
     const results: IndexResult[] = [];
 
     for(const task of tasks) {
-        await Promise.all(task.tasks.map(async (todo) => {
-            results.push(await runTask(todo));
-        }));
+        await Promise.all(task.tasks.map((async t => {
+            results.push(await t.run());
+        })));
     }
     
     return results;   

@@ -1,6 +1,6 @@
-import { persistTokenlistInTempDir } from "../../utils/filesystem";
 import { ingestTokenlistForNetwork } from "../runners/tokenlists";
 import { ingestTwaForNetwork } from "../runners/trustwallet";
+import { persistJsonFileIntempDir } from '@map3xyz/assets-helper';
 
 export abstract class NetworkTask {
     type: string;
@@ -21,6 +21,6 @@ export abstract class NetworkTask {
             default: 
                 throw new Error(`Unknown type: ${this.type}`);
         }
-        return persistTokenlistInTempDir(tokenlist, `${this.type}-${this.network}+${new Date().getTime()}`);
+        return persistJsonFileIntempDir(tokenlist, `${this.type}-${this.network}+${new Date().getTime()}`);
     }
 }
