@@ -26,36 +26,62 @@ function validateTaskParams(network: string, type: string): IndexerCommandValida
 }
 
 
-function getPlannedTasks(network: string, type: string): PlannedTasks[] {
-    const tasks = readAndParseJson(path.join(__dirname, '../../', 'tasks.json'));
-    const networks = Array.from(new Set(tasks.map(t => t.network)));
-    const plannedTasks: PlannedTasks[] = [];
-    
-    for(const network of networks) {
-        const networkTasks = tasks.filter(t => t.network === network);
-        plannedTasks.push({ 
-            network: network as string, 
-            tasks: networkTasks 
-        });
-    }
+function getPlannedTasks(network?: string, type?: string): PlannedTasks[] {
+    try {
+        let tasks = readAndParseJson(path.join(__dirname, '../../', 'tasks.json'));
 
-    return plannedTasks;
+        if(network) {
+            tasks = tasks.filter(t => t.network === network);
+        } 
+
+        if(type) {
+            tasks.filter(t => t.type === type);
+        }
+        
+        const networks = Array.from(new Set(tasks.map(t => t.network))) as string[];
+        const plannedTasks: PlannedTasks[] = [];
+
+        for(const _network of networks) {
+            const networkTasks = tasks.filter(t => t.network === _network);
+            plannedTasks.push({ 
+                network: _network, 
+                tasks: networkTasks 
+            });
+        }
+    
+        return plannedTasks;
+    } catch (err) {
+        throw err;
+    }
 }
 
 export async function runIndexerTasks(network?: string, type?: string): Promise<IndexResult[]> {
-    const validation = validateTaskParams(network, type);
-    if (validation.errors.length > 0) {
-        throw new Error(validation.errors.join('\n'));
-    }
 
-    const tasks = await getPlannedTasks(network, type);
-    const results: IndexResult[] = [];
-
-    for(const task of tasks) {
-        await Promise.all(task.tasks.map((async t => {
-            results.push(await t.run());
-        })));
-    }
+    try {
+        const validation = validateTaskParams(network, type);
+        if (validation.errors.length > 0) {
+            throw new Error(validation.errors.join('\n'));
+        }
     
-    return results;   
+        const tasks = await getPlannedTasks(network, type);
+        const results: IndexResult[] = [];
+    
+        await Promise.all(tasks.map((async network => {
+            for(const task of network.tasks) {
+                try {
+                    const result = await task.run();
+                    results.push(result);
+                } catch (err) {
+                    console.error(err);
+                }
+            }
+        })));
+    
+        return results;
+    } catch (err) {
+        throw err;
+    }
+   
+    
+    
 }

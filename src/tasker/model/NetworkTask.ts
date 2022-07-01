@@ -1,4 +1,4 @@
-import { ingestTokenlistForNetwork } from "../runners/tokenlists";
+import { fetchTokenlistForNetwork } from "../runners/tokenlists";
 import { ingestTwaForNetwork } from "../runners/trustwallet";
 import { persistJsonFileIntempDir } from '@map3xyz/assets-helper';
 
@@ -13,7 +13,7 @@ export abstract class NetworkTask {
         
         switch(this.type) {
             case 'tokenlist':
-                tokenlist = await ingestTokenlistForNetwork(this.source, this.network);
+                tokenlist = await fetchTokenlistForNetwork(this.source, this.network);
                 break;
             case 'trustwallet':
                 tokenlist = await ingestTwaForNetwork(this.network);
