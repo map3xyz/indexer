@@ -1,0 +1,9 @@
+[
+    {
+        "name": "aave-ethereum-tokenlist",
+        "network": "ethereum",
+        "type": "tokenlist",
+        "source": "https://wispy-bird-88a7.uniswap.workers.dev/?url=http://tokenlist.aave.eth.link",
+        "verified": false
+    }
+]
