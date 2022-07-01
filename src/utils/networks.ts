@@ -1,14 +1,14 @@
 
 
+import { getNetworks, NetworkInfo } from '@map3xyz/assets-helper';
 let chainIdMap; 
 
 async function getChainIdMap() {
-    if (chainIdMap) {
+    if (chainIdMap && Object.keys(chainIdMap).length > 0) {
         return chainIdMap;
     }
 
-    const networkInfoFiles = [];
-    // TODO await getNetworks(); from assets-helper returning a NetworkInfo[]
+    const networkInfoFiles: NetworkInfo[] = await getNetworks();
     chainIdMap = {};
     for (const [name, identifiers] of networkInfoFiles) {
         chainIdMap[name] = identifiers.chainId;
