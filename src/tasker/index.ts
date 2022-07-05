@@ -63,25 +63,25 @@ export async function runIndexerTasks(network?: string, type?: string): Promise<
             throw new Error(validation.errors.join('\n'));
         }
     
-        const tasks = await getPlannedTasks(network, type);
+        const tasks = getPlannedTasks(network, type);
         const results: IndexResult[] = [];
     
         await Promise.all(tasks.map((async network => {
-            for(const task of network.tasks) {
-                try {
-                    const result = await task.run();
-                    results.push(result);
-                } catch (err) {
-                    console.error(err);
+            return new Promise<void>(async resolve => {
+                for(const task of network.tasks) {
+                    try {
+                        const result = await task.run();
+                        results.push(result);
+                    } catch (err) {
+                        console.error(err);
+                    }
                 }
-            }
+                resolve();
+            });
         })));
     
         return results;
     } catch (err) {
         throw err;
     }
-   
-    
-    
 }
