@@ -60,20 +60,21 @@ export async function runIndexerTasks(network?: string, type?: string): Promise<
     try {
         const validation = validateTaskParams(network, type);
         if (validation.errors.length > 0) {
-            throw new Error(validation.errors.join('\n'));
+            throw new Error('Error(s) running indexer tasks: \n' + validation.errors.join('\n'));
         }
     
-        const tasks = getPlannedTasks(network, type);
+        const networkTasks = getPlannedTasks(network, type);
         const results: IndexResult[] = [];
     
-        await Promise.all(tasks.map((async network => {
+        await Promise.all(networkTasks.map((network => {
             return new Promise<void>(async resolve => {
                 for(const task of network.tasks) {
                     try {
                         const result = await task.run();
                         results.push(result);
                     } catch (err) {
-                        console.error(err);
+                        // ignore and just log
+                        console.error(`Error performing ${task.type} task ${task.source} on nework ${task.network}`, err);
                     }
                 }
                 resolve();
