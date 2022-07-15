@@ -13,7 +13,7 @@ async function fetchTokenlist(url: string): Promise<TokenList> {
 export async function fetchTokenlistForNetwork(source: string, network: string): Promise<TokenList> {
     try {
         const chainId = await getChainIdForNetwork(network);
-        // TODO: Its possible that chainId is null for non EVM networks
+        // TODO: It's possible that chainId is null for non EVM networks. Need to check
     
         let tokenlist = await fetchTokenlist(source);
         // @ts-ignore
