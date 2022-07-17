@@ -38,7 +38,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@uniswap/token-lists", "npm:1.0.0-beta.30"],\
             ["ava", "virtual:33e9ebc44ad420cf779b22e2404c1cc3e69678f6a230c028c5a5096d5b3cb9a1f57451a1ef4d3173a4ee86a475bf674707b77dfa88833a33b61d80ca58bdda1a#npm:4.3.0"],\
             ["axios", "npm:0.27.2"],\
-            ["commander", "npm:9.3.0"],\
             ["jsonschema", "npm:1.4.1"],\
             ["pkg", "virtual:33e9ebc44ad420cf779b22e2404c1cc3e69678f6a230c028c5a5096d5b3cb9a1f57451a1ef4d3173a4ee86a475bf674707b77dfa88833a33b61d80ca58bdda1a#npm:5.7.0"],\
             ["rimraf", "npm:3.0.2"],\
@@ -160,7 +159,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@uniswap/token-lists", "npm:1.0.0-beta.30"],\
             ["ava", "virtual:33e9ebc44ad420cf779b22e2404c1cc3e69678f6a230c028c5a5096d5b3cb9a1f57451a1ef4d3173a4ee86a475bf674707b77dfa88833a33b61d80ca58bdda1a#npm:4.3.0"],\
             ["axios", "npm:0.27.2"],\
-            ["commander", "npm:9.3.0"],\
             ["jsonschema", "npm:1.4.1"],\
             ["pkg", "virtual:33e9ebc44ad420cf779b22e2404c1cc3e69678f6a230c028c5a5096d5b3cb9a1f57451a1ef4d3173a4ee86a475bf674707b77dfa88833a33b61d80ca58bdda1a#npm:5.7.0"],\
             ["rimraf", "npm:3.0.2"],\
