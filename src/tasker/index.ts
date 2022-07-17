@@ -2,9 +2,10 @@ import path from "path";
 import { readAndParseJson, getRandomBranchNameForNetwork, persistJsonFile, push, ingestTokenList, cloneOrPullRepoAndUpdateSubmodules} from '@map3xyz/assets-helper';
 import { IndexResult } from "./model/IndexResult";
 import { IndexerCommandValidationResult, PlannedTasks } from "./model/types";
-import { NetworkTokenlistTaskResult } from "./model/NetworkTask";
+import { NetworkTask, NetworkTokenlistTaskResult } from "./model/NetworkTask";
 import fs from 'fs';
 import { TRUSTWALLET_CLONED_REPO_LOC, TRUSTWALLET_REPO } from "../utils/config";
+import { runTask } from "./runners";
 
 function validateTaskParams(network: string, type: string): IndexerCommandValidationResult {
     const tasks = readAndParseJson(path.join(__dirname, '../../', 'tasks.json'));
@@ -31,7 +32,7 @@ function validateTaskParams(network: string, type: string): IndexerCommandValida
 
 function getPlannedTasks(network?: string, type?: string): PlannedTasks[] {
     try {
-        let tasks = readAndParseJson(path.join(__dirname, '../../', 'tasks.json'));
+        let tasks = readAndParseJson(path.join(__dirname, '../../', 'tasks.json')) as NetworkTask[];
 
         if(network) {
             tasks = tasks.filter(t => t.network === network);
@@ -92,7 +93,7 @@ export async function runIndexerTasks(network?: string, type?: string): Promise<
             return new Promise<void>(async resolve => {
                 for(const task of network.tasks) {
                     try {
-                        let result = await task.run();
+                        let result = await runTask(task);
 
                         if(result.tokenlist && result.tokenlist.tokens.length > 0) {
                             result.tokenlist.tokens.forEach(token => {

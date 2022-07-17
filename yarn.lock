@@ -81,9 +81,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@map3xyz/assets-helper@npm:^1.0.34":
-  version: 1.0.34
-  resolution: "@map3xyz/assets-helper@npm:1.0.34"
+"@map3xyz/assets-helper@npm:^1.0.36":
+  version: 1.0.36
+  resolution: "@map3xyz/assets-helper@npm:1.0.36"
   dependencies:
     "@uniswap/token-lists": ^1.0.0-beta.30
     axios: ^0.27.2
@@ -92,7 +92,7 @@ __metadata:
     uuid: ^8.3.2
   bin:
     assets-helper: dist/index.js
-  checksum: fe83147b50597cf7ff3dfb7a1ab0fc5549614c62bdbeb011298dc3f10102d925decdaf940191dd8fe32ba450ae8cb758b96f44304da59d1a87734cfe99347266
+  checksum: 8e84ee06d76e86a11c539d4414de925ebbe5fb6625d38d5e47cc49c99268b1c094bb0c1376f8b59a32d297f7a808aea18f079566e03b28a63d5db6f2d1ed3c9e
   languageName: node
   linkType: hard
 
@@ -100,7 +100,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@map3xyz/indexer@workspace:."
   dependencies:
-    "@map3xyz/assets-helper": ^1.0.34
+    "@map3xyz/assets-helper": ^1.0.36
     "@types/node": ^18.0.0
     "@uniswap/token-lists": ^1.0.0-beta.30
     ava: ^4.3.0
