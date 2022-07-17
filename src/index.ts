@@ -2,6 +2,8 @@
 
 import { runIndexerTasks } from './tasker';
 
+console.log('Running indexer tasks...');
+
 runIndexerTasks()
 .then(results => {
   for(const result of results) {

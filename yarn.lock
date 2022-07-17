@@ -81,19 +81,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@map3xyz/assets-helper@npm:^1.0.32":
-  version: 1.0.32
-  resolution: "@map3xyz/assets-helper@npm:1.0.32"
+"@map3xyz/assets-helper@npm:^1.0.34":
+  version: 1.0.34
+  resolution: "@map3xyz/assets-helper@npm:1.0.34"
   dependencies:
     "@uniswap/token-lists": ^1.0.0-beta.30
     axios: ^0.27.2
-    commander: ^9.3.0
     jsonschema: ^1.4.1
     shelljs: ^0.8.5
     uuid: ^8.3.2
   bin:
-    assets-helper: dist/cli.js
-  checksum: eab4dcf4218945cf6c270d293b7488af43cdae21357b67f437eba6ea65c58b24a607c4541dce71353606664fc60bf670eab650ee1f0d5ab21092a63bcf03474c
+    assets-helper: dist/index.js
+  checksum: fe83147b50597cf7ff3dfb7a1ab0fc5549614c62bdbeb011298dc3f10102d925decdaf940191dd8fe32ba450ae8cb758b96f44304da59d1a87734cfe99347266
   languageName: node
   linkType: hard
 
@@ -101,7 +100,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@map3xyz/indexer@workspace:."
   dependencies:
-    "@map3xyz/assets-helper": ^1.0.32
+    "@map3xyz/assets-helper": ^1.0.34
     "@types/node": ^18.0.0
     "@uniswap/token-lists": ^1.0.0-beta.30
     ava: ^4.3.0
@@ -765,13 +764,6 @@ __metadata:
   dependencies:
     delayed-stream: ~1.0.0
   checksum: 49fa4aeb4916567e33ea81d088f6584749fc90c7abec76fd516bf1c5aa5c79f3584b5ba3de6b86d26ddd64bae5329c4c7479343250cfe71c75bb366eae53bb7c
-  languageName: node
-  linkType: hard
-
-"commander@npm:^9.3.0":
-  version: 9.3.0
-  resolution: "commander@npm:9.3.0"
-  checksum: d421ce66fee25792a1470c69aa8d1b86434bf873a96483aa92c8267f81a6f20c6f7c426f5e82f88ac50a8ec4855d3f2787aebcdef8aa559e1080a2337a95a217
   languageName: node
   linkType: hard
 
