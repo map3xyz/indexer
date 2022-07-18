@@ -33,7 +33,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         [null, {\
           "packageLocation": "./",\
           "packageDependencies": [\
-            ["@map3xyz/assets-helper", "npm:1.0.36"],\
+            ["@map3xyz/assets-helper", "npm:1.0.41"],\
             ["@types/node", "npm:18.0.0"],\
             ["@uniswap/token-lists", "npm:1.0.0-beta.30"],\
             ["ava", "virtual:33e9ebc44ad420cf779b22e2404c1cc3e69678f6a230c028c5a5096d5b3cb9a1f57451a1ef4d3173a4ee86a475bf674707b77dfa88833a33b61d80ca58bdda1a#npm:4.3.0"],\
@@ -135,10 +135,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["@map3xyz/assets-helper", [\
-        ["npm:1.0.36", {\
-          "packageLocation": "./.yarn/cache/@map3xyz-assets-helper-npm-1.0.36-3539f217ce-8e84ee06d7.zip/node_modules/@map3xyz/assets-helper/",\
+        ["npm:1.0.41", {\
+          "packageLocation": "./.yarn/cache/@map3xyz-assets-helper-npm-1.0.41-141ddf0f98-aa8f1c4278.zip/node_modules/@map3xyz/assets-helper/",\
           "packageDependencies": [\
-            ["@map3xyz/assets-helper", "npm:1.0.36"],\
+            ["@map3xyz/assets-helper", "npm:1.0.41"],\
             ["@uniswap/token-lists", "npm:1.0.0-beta.30"],\
             ["axios", "npm:0.27.2"],\
             ["jsonschema", "npm:1.4.1"],\
@@ -153,7 +153,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./",\
           "packageDependencies": [\
             ["@map3xyz/indexer", "workspace:."],\
-            ["@map3xyz/assets-helper", "npm:1.0.36"],\
+            ["@map3xyz/assets-helper", "npm:1.0.41"],\
             ["@types/node", "npm:18.0.0"],\
             ["@uniswap/token-lists", "npm:1.0.0-beta.30"],\
             ["ava", "virtual:33e9ebc44ad420cf779b22e2404c1cc3e69678f6a230c028c5a5096d5b3cb9a1f57451a1ef4d3173a4ee86a475bf674707b77dfa88833a33b61d80ca58bdda1a#npm:4.3.0"],\
@@ -737,7 +737,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         ["npm:5.0.1", {\
           "packageLocation": "./.yarn/cache/chalk-npm-5.0.1-6afcb94227-7b45300372.zip/node_modules/chalk/",\
           "packageDependencies": [\
-            ["chalk", "npm:5.0.1"]\
+            ["chalk", "npm:5.0.1"],\
+            ["#ansi-styles", [\
+              "ansi-styles",\
+              "npm:6.1.0"\
+            ]],\
+            ["#supports-color", [\
+              "supports-color",\
+              "npm:9.2.2"\
+            ]]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -3237,6 +3245,13 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [\
             ["supports-color", "npm:7.2.0"],\
             ["has-flag", "npm:4.0.0"]\
+          ],\
+          "linkType": "HARD"\
+        }],\
+        ["npm:9.2.2", {\
+          "packageLocation": "./.yarn/cache/supports-color-npm-9.2.2-d003069e84-976d848774.zip/node_modules/supports-color/",\
+          "packageDependencies": [\
+            ["supports-color", "npm:9.2.2"]\
           ],\
           "linkType": "HARD"\
         }]\

@@ -5,6 +5,20 @@ __metadata:
   version: 6
   cacheKey: 8
 
+"#ansi-styles@npm:ansi-styles@6.1.0, ansi-styles@npm:^6.0.0, ansi-styles@npm:^6.1.0":
+  version: 6.1.0
+  resolution: "ansi-styles@npm:6.1.0"
+  checksum: 7a7f8528c07a9d20c3a92bccd2b6bc3bb4d26e5cb775c02826921477377bd495d615d61f710d56216344b6238d1d11ef2b0348e146c5b128715578bfb3217229
+  languageName: node
+  linkType: hard
+
+"#supports-color@npm:supports-color@9.2.2":
+  version: 9.2.2
+  resolution: "supports-color@npm:9.2.2"
+  checksum: 976d84877402fc38c1d43b1fde20b0a8dc0283273f21cfebe4ff7507d27543cdfbeec7db108a96b82d694465f06d64e8577562b05d0520b41710088e0a33cc50
+  languageName: node
+  linkType: hard
+
 "@babel/helper-validator-identifier@npm:^7.16.7, @babel/helper-validator-identifier@npm:^7.18.6":
   version: 7.18.6
   resolution: "@babel/helper-validator-identifier@npm:7.18.6"
@@ -81,9 +95,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@map3xyz/assets-helper@npm:^1.0.36":
-  version: 1.0.36
-  resolution: "@map3xyz/assets-helper@npm:1.0.36"
+"@map3xyz/assets-helper@npm:^1.0.41":
+  version: 1.0.41
+  resolution: "@map3xyz/assets-helper@npm:1.0.41"
   dependencies:
     "@uniswap/token-lists": ^1.0.0-beta.30
     axios: ^0.27.2
@@ -92,7 +106,7 @@ __metadata:
     uuid: ^8.3.2
   bin:
     assets-helper: dist/index.js
-  checksum: 8e84ee06d76e86a11c539d4414de925ebbe5fb6625d38d5e47cc49c99268b1c094bb0c1376f8b59a32d297f7a808aea18f079566e03b28a63d5db6f2d1ed3c9e
+  checksum: aa8f1c427870edd3219a77dfbe6692540c1cec8f61beb3f3a94a28bbfe522ec8dd8e8a18e69c11c18f7753ff47893b7c5c66be379493beca37f3c11bfd9d9823
   languageName: node
   linkType: hard
 
@@ -100,7 +114,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@map3xyz/indexer@workspace:."
   dependencies:
-    "@map3xyz/assets-helper": ^1.0.36
+    "@map3xyz/assets-helper": ^1.0.41
     "@types/node": ^18.0.0
     "@uniswap/token-lists": ^1.0.0-beta.30
     ava: ^4.3.0
@@ -301,13 +315,6 @@ __metadata:
   dependencies:
     color-convert: ^2.0.1
   checksum: 513b44c3b2105dd14cc42a19271e80f386466c4be574bccf60b627432f9198571ebf4ab1e4c3ba17347658f4ee1711c163d574248c0c1cdc2d5917a0ad582ec4
-  languageName: node
-  linkType: hard
-
-"ansi-styles@npm:^6.0.0, ansi-styles@npm:^6.1.0":
-  version: 6.1.0
-  resolution: "ansi-styles@npm:6.1.0"
-  checksum: 7a7f8528c07a9d20c3a92bccd2b6bc3bb4d26e5cb775c02826921477377bd495d615d61f710d56216344b6238d1d11ef2b0348e146c5b128715578bfb3217229
   languageName: node
   linkType: hard
 

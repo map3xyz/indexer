@@ -21,6 +21,12 @@
             "env": {
                 "NODE_ENV": "development"
               }
+        },
+        {
+            "command": "yarn test",
+            "name": "Run Tests",
+            "request": "launch",
+            "type": "node-terminal"
         }
     ]
 }
