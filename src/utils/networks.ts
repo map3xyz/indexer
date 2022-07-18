@@ -12,10 +12,10 @@ async function getChainIdMap() {
     
         networks = await getNetworks();
         chainIdMap = {};
-        for (const [name, identifiers] of networks) {
-            chainIdMap[name] = identifiers.chainId;
-        }
-    
+        networks.forEach(network => {
+            chainIdMap[network.name] = network.identifiers.chainId;
+        });
+        
         return chainIdMap;
     } catch (err) {
         throw err;
