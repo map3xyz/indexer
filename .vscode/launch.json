@@ -7,7 +7,7 @@
         {
             "type": "node",
             "request": "launch",
-            "name": "Launch Debug",
+            "name": "Run Debug",
             "skipFiles": [
                 "<node_internals>/**"
             ],
@@ -24,7 +24,7 @@
         },
         {
             "command": "yarn test",
-            "name": "Run Tests",
+            "name": "Run Tests Debug",
             "request": "launch",
             "type": "node-terminal"
         }
