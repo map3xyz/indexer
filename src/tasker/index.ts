@@ -144,7 +144,7 @@ export async function runIndexerTasks(network?: string, type?: string): Promise<
                         const file = persistJsonFile(result.tokenlist);
                         // Ingest the new ones and their props/files/logos to disk. Transform to map3 tokenlist format
                         // commit with a nice commit message that allows us to parse what's been done programmatically
-                        await ingestTokenList(file, networkDir, newBranchName)
+                        await ingestTokenList(file, networkDir, newBranchName, result.taskType)
                     }
                     
                     // TODO: validate repo is clean 
