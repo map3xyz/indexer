@@ -4,7 +4,7 @@ import { IndexResult } from "./model/IndexResult";
 import { IndexerCommandValidationResult, PlannedTasks } from "./model/types";
 import { NetworkTask, NetworkTokenlistTaskResult } from "./model/NetworkTask";
 import fs from 'fs';
-import { MAP3XYZ_CLONED_REPO_LOC, TRUSTWALLET_CLONED_REPO_LOC, TRUSTWALLET_REPO } from "../utils/config";
+import { MAP3XYZ_CLONED_REPO_LOC, MAP3XYZ_REPO, TRUSTWALLET_CLONED_REPO_LOC, TRUSTWALLET_REPO } from "../utils/config";
 import { runTask } from "./runners";
 
 function validateTaskParams(network: string, type: string): IndexerCommandValidationResult {
@@ -59,9 +59,12 @@ function getPlannedTasks(network?: string, type?: string): PlannedTasks[] {
     }
 }
 
-async function ensureAssetsRepoClonedAndInLatestMaster() : Promise<void> {
-    // ensure that the assets repo is cloned and up to date
-    return cloneOrPullRepoAndUpdateSubmodules(TRUSTWALLET_REPO, TRUSTWALLET_CLONED_REPO_LOC, false, 'master')
+async function ensureAssetsRepoClonedAndInLatestMaster() : Promise<any> {
+    // ensure that the assets repos are cloned and up to date
+    return Promise.all([
+            cloneOrPullRepoAndUpdateSubmodules(TRUSTWALLET_REPO, TRUSTWALLET_CLONED_REPO_LOC, false, 'master'),
+            cloneOrPullRepoAndUpdateSubmodules(MAP3XYZ_REPO, MAP3XYZ_CLONED_REPO_LOC, true, 'master'),
+        ]);
 }
 
 function getRepoDirForNetworkToken(network: string, address: string): string {
@@ -93,7 +96,7 @@ export async function runIndexerTasks(network?: string, type?: string): Promise<
             return new Promise<void>(async resolve => {
                 
                 for(const task of network.tasks) {
-                    try {
+                    try {   
                         let result = await runTask(task);
 
                         if(result.tokenlist && result.tokenlist.tokens.length > 0) {
