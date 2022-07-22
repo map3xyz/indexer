@@ -8,7 +8,7 @@ export async function runTask(task: NetworkTask): Promise<NetworkTokenlistTaskRe
         let tokenlist;
         switch(task.type) {
             case 'tokenlist':
-                tokenlist = await fetchTokenlistForNetwork(task.source, task.network);
+                tokenlist = await fetchTokenlistForNetwork(task.source, task.network, task.name);
                 break;
             case 'trustwallet':
                 tokenlist = await getTokenlistFromTrustWallet(task.network);
