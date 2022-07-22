@@ -66,7 +66,7 @@ async function ensureAssetsRepoClonedAndInLatestMaster() : Promise<void> {
 
 function getRepoDirForNetworkToken(network: string, address: string): string {
     // TODO: generalise for more than one submodule (i.e. tokenlist-ext-1)
-    return path.join(getRepoDirForNetwork(network), 'tokens', `${network}-tokenlist`, address);
+    return path.join(getRepoDirForNetwork(network), 'assets', `${network}-tokenlist`, address);
     
 }
 
@@ -135,7 +135,7 @@ export async function runIndexerTasks(network?: string, type?: string): Promise<
                 }
             
                 // TODO; abstract away for more than one submodule
-                const networkDir = path.join(getRepoDirForNetwork(network.network), 'tokens',`${network.network}-tokenlist`);
+                const networkDir = path.join(getRepoDirForNetwork(network.network), 'assets',`${network.network}-tokenlist`);
                 
                 // if there are new ones to add and new branch has not been created (foundnewassets=false), create a new branch
                 if(foundNewAssets) {
