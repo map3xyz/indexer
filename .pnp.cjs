@@ -33,12 +33,11 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         [null, {\
           "packageLocation": "./",\
           "packageDependencies": [\
-            ["@map3xyz/assets-helper", "npm:1.0.30"],\
+            ["@map3xyz/assets-helper", "npm:1.0.64"],\
             ["@types/node", "npm:18.0.0"],\
             ["@uniswap/token-lists", "npm:1.0.0-beta.30"],\
             ["ava", "virtual:33e9ebc44ad420cf779b22e2404c1cc3e69678f6a230c028c5a5096d5b3cb9a1f57451a1ef4d3173a4ee86a475bf674707b77dfa88833a33b61d80ca58bdda1a#npm:4.3.0"],\
             ["axios", "npm:0.27.2"],\
-            ["commander", "npm:9.3.0"],\
             ["jsonschema", "npm:1.4.1"],\
             ["pkg", "virtual:33e9ebc44ad420cf779b22e2404c1cc3e69678f6a230c028c5a5096d5b3cb9a1f57451a1ef4d3173a4ee86a475bf674707b77dfa88833a33b61d80ca58bdda1a#npm:5.7.0"],\
             ["rimraf", "npm:3.0.2"],\
@@ -136,13 +135,12 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["@map3xyz/assets-helper", [\
-        ["npm:1.0.30", {\
-          "packageLocation": "./.yarn/cache/@map3xyz-assets-helper-npm-1.0.30-831a7cbfca-632d3d70a6.zip/node_modules/@map3xyz/assets-helper/",\
+        ["npm:1.0.64", {\
+          "packageLocation": "./.yarn/cache/@map3xyz-assets-helper-npm-1.0.64-f2124af281-cbbe67b601.zip/node_modules/@map3xyz/assets-helper/",\
           "packageDependencies": [\
-            ["@map3xyz/assets-helper", "npm:1.0.30"],\
+            ["@map3xyz/assets-helper", "npm:1.0.64"],\
             ["@uniswap/token-lists", "npm:1.0.0-beta.30"],\
             ["axios", "npm:0.27.2"],\
-            ["commander", "npm:9.3.0"],\
             ["jsonschema", "npm:1.4.1"],\
             ["shelljs", "npm:0.8.5"],\
             ["uuid", "npm:8.3.2"]\
@@ -155,12 +153,11 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./",\
           "packageDependencies": [\
             ["@map3xyz/indexer", "workspace:."],\
-            ["@map3xyz/assets-helper", "npm:1.0.30"],\
+            ["@map3xyz/assets-helper", "npm:1.0.64"],\
             ["@types/node", "npm:18.0.0"],\
             ["@uniswap/token-lists", "npm:1.0.0-beta.30"],\
             ["ava", "virtual:33e9ebc44ad420cf779b22e2404c1cc3e69678f6a230c028c5a5096d5b3cb9a1f57451a1ef4d3173a4ee86a475bf674707b77dfa88833a33b61d80ca58bdda1a#npm:4.3.0"],\
             ["axios", "npm:0.27.2"],\
-            ["commander", "npm:9.3.0"],\
             ["jsonschema", "npm:1.4.1"],\
             ["pkg", "virtual:33e9ebc44ad420cf779b22e2404c1cc3e69678f6a230c028c5a5096d5b3cb9a1f57451a1ef4d3173a4ee86a475bf674707b77dfa88833a33b61d80ca58bdda1a#npm:5.7.0"],\
             ["rimraf", "npm:3.0.2"],\
@@ -740,7 +737,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         ["npm:5.0.1", {\
           "packageLocation": "./.yarn/cache/chalk-npm-5.0.1-6afcb94227-7b45300372.zip/node_modules/chalk/",\
           "packageDependencies": [\
-            ["chalk", "npm:5.0.1"]\
+            ["chalk", "npm:5.0.1"],\
+            ["#ansi-styles", [\
+              "ansi-styles",\
+              "npm:6.1.0"\
+            ]],\
+            ["#supports-color", [\
+              "supports-color",\
+              "npm:9.2.2"\
+            ]]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -907,15 +912,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [\
             ["combined-stream", "npm:1.0.8"],\
             ["delayed-stream", "npm:1.0.0"]\
-          ],\
-          "linkType": "HARD"\
-        }]\
-      ]],\
-      ["commander", [\
-        ["npm:9.3.0", {\
-          "packageLocation": "./.yarn/cache/commander-npm-9.3.0-1393a6e1f6-d421ce66fe.zip/node_modules/commander/",\
-          "packageDependencies": [\
-            ["commander", "npm:9.3.0"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -3249,6 +3245,13 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [\
             ["supports-color", "npm:7.2.0"],\
             ["has-flag", "npm:4.0.0"]\
+          ],\
+          "linkType": "HARD"\
+        }],\
+        ["npm:9.2.2", {\
+          "packageLocation": "./.yarn/cache/supports-color-npm-9.2.2-d003069e84-976d848774.zip/node_modules/supports-color/",\
+          "packageDependencies": [\
+            ["supports-color", "npm:9.2.2"]\
           ],\
           "linkType": "HARD"\
         }]\

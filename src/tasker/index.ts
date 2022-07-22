@@ -1,7 +1,11 @@
 import path from "path";
-import { readAndParseJson } from '@map3xyz/assets-helper';
+import { readAndParseJson, getRandomBranchNameForNetworkName, persistJsonFile, push, ingestTokenList, cloneOrPullRepoAndUpdateSubmodules} from '@map3xyz/assets-helper';
 import { IndexResult } from "./model/IndexResult";
 import { IndexerCommandValidationResult, PlannedTasks } from "./model/types";
+import { NetworkTask, NetworkTokenlistTaskResult } from "./model/NetworkTask";
+import fs from 'fs';
+import { MAP3XYZ_CLONED_REPO_LOC, MAP3XYZ_REPO, TRUSTWALLET_CLONED_REPO_LOC, TRUSTWALLET_REPO } from "../utils/config";
+import { runTask } from "./runners";
 
 function validateTaskParams(network: string, type: string): IndexerCommandValidationResult {
     const tasks = readAndParseJson(path.join(__dirname, '../../', 'tasks.json'));
@@ -28,7 +32,7 @@ function validateTaskParams(network: string, type: string): IndexerCommandValida
 
 function getPlannedTasks(network?: string, type?: string): PlannedTasks[] {
     try {
-        let tasks = readAndParseJson(path.join(__dirname, '../../', 'tasks.json'));
+        let tasks = readAndParseJson(path.join(__dirname, '../../', 'tasks.json')) as NetworkTask[];
 
         if(network) {
             tasks = tasks.filter(t => t.network === network);
@@ -55,33 +59,115 @@ function getPlannedTasks(network?: string, type?: string): PlannedTasks[] {
     }
 }
 
+async function ensureAssetsRepoClonedAndInLatestMaster() : Promise<any> {
+    // ensure that the assets repos are cloned and up to date
+    return Promise.all([
+            cloneOrPullRepoAndUpdateSubmodules(TRUSTWALLET_REPO, TRUSTWALLET_CLONED_REPO_LOC, false, 'master'),
+            cloneOrPullRepoAndUpdateSubmodules(MAP3XYZ_REPO, MAP3XYZ_CLONED_REPO_LOC, true, 'master'),
+        ]);
+}
+
+function getRepoDirForNetworkToken(network: string, address: string): string {
+    // TODO: generalise for more than one submodule (i.e. tokenlist-ext-1)
+    return path.join(getRepoDirForNetwork(network), 'assets', `${network}-tokenlist`, address);
+    
+}
+
+function getRepoDirForNetwork(network: string): string {
+    return path.join(MAP3XYZ_CLONED_REPO_LOC, 'networks', network);
+}
+
 export async function runIndexerTasks(network?: string, type?: string): Promise<IndexResult[]> {
 
     try {
         const validation = validateTaskParams(network, type);
         if (validation.errors.length > 0) {
-            throw new Error(validation.errors.join('\n'));
+            throw new Error('Error(s) running indexer tasks: \n' + validation.errors.join('\n'));
         }
+
+        await ensureAssetsRepoClonedAndInLatestMaster();
     
-        const tasks = await getPlannedTasks(network, type);
-        const results: IndexResult[] = [];
+        const networkTasks = getPlannedTasks(network, type);
+        const sourceIndexResults: IndexResult[] = [];
+        const newTokenlistFoundResults: NetworkTokenlistTaskResult[] = [];
+        let foundNewAssets = false;
     
-        await Promise.all(tasks.map((async network => {
-            for(const task of network.tasks) {
-                try {
-                    const result = await task.run();
-                    results.push(result);
-                } catch (err) {
-                    console.error(err);
+        await Promise.all(networkTasks.map((network => {
+            return new Promise<void>(async resolve => {
+                
+                for(const task of network.tasks) {
+                    try {   
+                        let result = await runTask(task);
+
+                        if(result.tokenlist && result.tokenlist.tokens.length > 0) {
+                            result.tokenlist.tokens.forEach(token => {
+                                            
+                                // For each network tokenlist, extract the new ones to add                                                
+                                const tokenExistsInRepo = fs.existsSync(getRepoDirForNetworkToken(task.network, token.address));
+                                const tokenExistsInTempResults = newTokenlistFoundResults.find(_result => _result.tokenlist.tokens.find(t => t.address === token.address));
+                                
+                                if(!tokenExistsInRepo && !tokenExistsInTempResults) {
+                                    if(!foundNewAssets) {
+                                        foundNewAssets = true;
+                                        newTokenlistFoundResults.push({
+                                            ...result,
+                                            tokenlist:  {
+                                                ...result.tokenlist,
+                                                tokens: [token]
+                                            }
+                                        });
+                                    } else {
+                                        newTokenlistFoundResults[0].tokenlist.tokens.push(token);
+                                    }
+                                }
+                            });
+                        }
+                    } catch (err) {
+                        // ignore and just log
+                        console.error(`Error performing ${task.type} task ${task.source} on nework ${task.network}`, err);
+                        sourceIndexResults.push({
+                            success: false,
+                            network: task.network,
+                            type: task.type,
+                            source: task.source,
+                            verified: task.verified,
+                            newTokensIndexed: 0,
+                            errors: [err.message]
+                        })
+                    }
                 }
-            }
+            
+                // TODO; abstract away for more than one submodule
+                const networkDir = path.join(getRepoDirForNetwork(network.network), 'assets',`${network.network}-tokenlist`);
+                
+                // if there are new ones to add and new branch has not been created (foundnewassets=false), create a new branch
+                if(foundNewAssets) {
+                    const newBranchName = getRandomBranchNameForNetworkName(network.network);
+                    for (const result of newTokenlistFoundResults) {
+                        const file = persistJsonFile(result.tokenlist);
+                        // Ingest the new ones and their props/files/logos to disk. Transform to map3 tokenlist format
+                        // commit with a nice commit message that allows us to parse what's been done programmatically
+                        await ingestTokenList(file, networkDir, newBranchName, result.taskType)
+                    }
+                    
+                    // TODO: validate repo is clean 
+
+                    // push new branch
+                    await push(networkDir, newBranchName);
+
+                    // TODO: open pull request
+                }
+
+                resolve();
+            });
+            // TODO: delay/wait 30s, revert to master, pull lastest and terminate (to allow for remote validation and auto merging)
         })));
     
-        return results;
+        return sourceIndexResults;
     } catch (err) {
         throw err;
     }
-   
-    
-    
 }
+
+
+

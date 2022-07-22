@@ -5,6 +5,20 @@ __metadata:
   version: 6
   cacheKey: 8
 
+"#ansi-styles@npm:ansi-styles@6.1.0, ansi-styles@npm:^6.0.0, ansi-styles@npm:^6.1.0":
+  version: 6.1.0
+  resolution: "ansi-styles@npm:6.1.0"
+  checksum: 7a7f8528c07a9d20c3a92bccd2b6bc3bb4d26e5cb775c02826921477377bd495d615d61f710d56216344b6238d1d11ef2b0348e146c5b128715578bfb3217229
+  languageName: node
+  linkType: hard
+
+"#supports-color@npm:supports-color@9.2.2":
+  version: 9.2.2
+  resolution: "supports-color@npm:9.2.2"
+  checksum: 976d84877402fc38c1d43b1fde20b0a8dc0283273f21cfebe4ff7507d27543cdfbeec7db108a96b82d694465f06d64e8577562b05d0520b41710088e0a33cc50
+  languageName: node
+  linkType: hard
+
 "@babel/helper-validator-identifier@npm:^7.16.7, @babel/helper-validator-identifier@npm:^7.18.6":
   version: 7.18.6
   resolution: "@babel/helper-validator-identifier@npm:7.18.6"
@@ -81,19 +95,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@map3xyz/assets-helper@npm:^1.0.29":
-  version: 1.0.30
-  resolution: "@map3xyz/assets-helper@npm:1.0.30"
+"@map3xyz/assets-helper@npm:^1.0.64":
+  version: 1.0.64
+  resolution: "@map3xyz/assets-helper@npm:1.0.64"
   dependencies:
     "@uniswap/token-lists": ^1.0.0-beta.30
     axios: ^0.27.2
-    commander: ^9.3.0
     jsonschema: ^1.4.1
     shelljs: ^0.8.5
     uuid: ^8.3.2
   bin:
-    assets-helper: dist/cli.js
-  checksum: 632d3d70a6bcd7c2163068de556551ea95a98c9a06d7ebd2e4ecb09bb821619f4a16801bd80c2307e28ba19daf064363bf994acb6f1da5ae649acd8e3a6575ae
+    assets-helper: dist/index.js
+  checksum: cbbe67b601fee680a79c5708d175f65c0999c193bcd03b562bace968b61736c1ad1645966798be76a98b2997b4deb446e6b15ed5aa05c3dbdca14adbef80f0a4
   languageName: node
   linkType: hard
 
@@ -101,12 +114,11 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@map3xyz/indexer@workspace:."
   dependencies:
-    "@map3xyz/assets-helper": ^1.0.29
+    "@map3xyz/assets-helper": ^1.0.64
     "@types/node": ^18.0.0
     "@uniswap/token-lists": ^1.0.0-beta.30
     ava: ^4.3.0
     axios: ^0.27.2
-    commander: ^9.3.0
     jsonschema: ^1.4.1
     pkg: ^5.7.0
     rimraf: ^3.0.2
@@ -303,13 +315,6 @@ __metadata:
   dependencies:
     color-convert: ^2.0.1
   checksum: 513b44c3b2105dd14cc42a19271e80f386466c4be574bccf60b627432f9198571ebf4ab1e4c3ba17347658f4ee1711c163d574248c0c1cdc2d5917a0ad582ec4
-  languageName: node
-  linkType: hard
-
-"ansi-styles@npm:^6.0.0, ansi-styles@npm:^6.1.0":
-  version: 6.1.0
-  resolution: "ansi-styles@npm:6.1.0"
-  checksum: 7a7f8528c07a9d20c3a92bccd2b6bc3bb4d26e5cb775c02826921477377bd495d615d61f710d56216344b6238d1d11ef2b0348e146c5b128715578bfb3217229
   languageName: node
   linkType: hard
 
@@ -766,13 +771,6 @@ __metadata:
   dependencies:
     delayed-stream: ~1.0.0
   checksum: 49fa4aeb4916567e33ea81d088f6584749fc90c7abec76fd516bf1c5aa5c79f3584b5ba3de6b86d26ddd64bae5329c4c7479343250cfe71c75bb366eae53bb7c
-  languageName: node
-  linkType: hard
-
-"commander@npm:^9.3.0":
-  version: 9.3.0
-  resolution: "commander@npm:9.3.0"
-  checksum: d421ce66fee25792a1470c69aa8d1b86434bf873a96483aa92c8267f81a6f20c6f7c426f5e82f88ac50a8ec4855d3f2787aebcdef8aa559e1080a2337a95a217
   languageName: node
   linkType: hard
 
