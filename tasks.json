@@ -12,5 +12,12 @@
         "type": "tokenlist",
         "source": "https://raw.githubusercontent.com/maticnetwork/polygon-token-list/master/src/tokens/default.json",
         "verified": false
+    },
+    {
+        "name": "gemini-tokenlist",
+        "network": "ethereum",
+        "type": "tokenlist",
+        "source": "https://www.gemini.com/uniswap/manifest.json",
+        "verified": false
     }
 ]
