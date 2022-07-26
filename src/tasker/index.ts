@@ -89,12 +89,13 @@ export async function runIndexerTasks(network?: string, type?: string): Promise<
     
         const networkTasks = getPlannedTasks(network, type);
         const sourceIndexResults: IndexResult[] = [];
-        const newTokenlistFoundResults: NetworkTokenlistTaskResult[] = [];
-        let foundNewAssets = false;
     
         await Promise.all(networkTasks.map((network => {
             return new Promise<void>(async resolve => {
                 
+                let foundNewAssets = false;
+                const newTokenlistFoundResults: NetworkTokenlistTaskResult[] = [];
+
                 for(const task of network.tasks) {
                     try {   
                         let result = await runTask(task);
