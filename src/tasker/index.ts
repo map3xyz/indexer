@@ -4,7 +4,7 @@ import { IndexResult } from "./model/IndexResult";
 import { IndexerCommandValidationResult, PlannedTasks } from "./model/types";
 import { NetworkTask, NetworkTokenlistTaskResult } from "./model/NetworkTask";
 import fs from 'fs';
-import { MAP3XYZ_CLONED_REPO_LOC, MAP3XYZ_REPO, TRUSTWALLET_CLONED_REPO_LOC, TRUSTWALLET_REPO } from "../utils/config";
+import { MAP3XYZ_CLONED_REPO_LOC, MAP3XYZ_REPO, TEST_REGENERATE_MODE, TRUSTWALLET_CLONED_REPO_LOC, TRUSTWALLET_REPO } from "../utils/config";
 import { runTask } from "./runners";
 
 function validateTaskParams(network: string, type: string): IndexerCommandValidationResult {
@@ -59,11 +59,11 @@ function getPlannedTasks(network?: string, type?: string): PlannedTasks[] {
     }
 }
 
-async function ensureAssetsRepoClonedAndInLatestMaster() : Promise<any> {
+async function ensureAssetsRepoClonedAndInLatestMaster(ignoreSubmodules: boolean = false) : Promise<any> {
     // ensure that the assets repos are cloned and up to date
     return Promise.all([
             cloneOrPullRepoAndUpdateSubmodules(TRUSTWALLET_REPO, TRUSTWALLET_CLONED_REPO_LOC, false, 'master'),
-            cloneOrPullRepoAndUpdateSubmodules(MAP3XYZ_REPO, MAP3XYZ_CLONED_REPO_LOC, true, 'master'),
+            cloneOrPullRepoAndUpdateSubmodules(MAP3XYZ_REPO, MAP3XYZ_CLONED_REPO_LOC, ignoreSubmodules? false : true, 'master'),
         ]);
 }
 
@@ -85,7 +85,7 @@ export async function runIndexerTasks(network?: string, type?: string): Promise<
             throw new Error('Error(s) running indexer tasks: \n' + validation.errors.join('\n'));
         }
 
-        await ensureAssetsRepoClonedAndInLatestMaster();
+        await ensureAssetsRepoClonedAndInLatestMaster(TEST_REGENERATE_MODE);
     
         const networkTasks = getPlannedTasks(network, type);
         const sourceIndexResults: IndexResult[] = [];
@@ -107,7 +107,7 @@ export async function runIndexerTasks(network?: string, type?: string): Promise<
                                 const tokenExistsInRepo = fs.existsSync(getRepoDirForNetworkToken(task.network, token.address));
                                 const tokenExistsInTempResults = newTokenlistFoundResults.find(_result => _result.tokenlist.tokens.find(t => t.address === token.address));
                                 
-                                if(!tokenExistsInRepo && !tokenExistsInTempResults) {
+                                if((!tokenExistsInRepo && !tokenExistsInTempResults) || TEST_REGENERATE_MODE) {
                                     if(!foundNewAssets) {
                                         foundNewAssets = true;
                                         newTokenlistFoundResults.push({
@@ -142,7 +142,7 @@ export async function runIndexerTasks(network?: string, type?: string): Promise<
                 const networkDir = path.join(getRepoDirForNetwork(network.network), 'assets',`${network.network}-tokenlist`);
                 
                 // if there are new ones to add and new branch has not been created (foundnewassets=false), create a new branch
-                if(foundNewAssets) {
+                if(foundNewAssets || TEST_REGENERATE_MODE) {
                     const newBranchName = getRandomBranchNameForNetworkName(network.network);
                     for (const result of newTokenlistFoundResults) {
                         const file = persistJsonFile(result.tokenlist);
@@ -154,7 +154,9 @@ export async function runIndexerTasks(network?: string, type?: string): Promise<
                     // TODO: validate repo is clean 
 
                     // push new branch
-                    await push(networkDir, newBranchName);
+                    if(!TEST_REGENERATE_MODE) {
+                        await push(networkDir, newBranchName);
+                    }
 
                     // TODO: open pull request
                 }

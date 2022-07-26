@@ -23,7 +23,7 @@ export async function getTokenlistFromTrustWallet(network: string): Promise<Toke
         const tokenlistFile = path.join(getTwaInstanceDirectory(), 'blockchains', network, 'tokenlist.json');
 
         if(!fs.existsSync(tokenlistFile)) {
-            throw `Tokenlist file not found for network ${network} on trustwallet`;
+            throw new Error(`Tokenlist file not found for network ${network} on trustwallet`);
         }
 
         return JSON.parse(fs.readFileSync(tokenlistFile, 'utf8')) as TokenList;
