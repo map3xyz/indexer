@@ -1,6 +1,6 @@
 import path from 'path';
 
-export const TEST_REGENERATE_MODE = true; // TODO; abstract to env file
+export const TEST_REGENERATE_MODE = false; // TODO; abstract to env file
 export const DEFAULT_TEMP_DIR = './tmp';
 export const MAP3XYZ_REPO = 'git@github.com:map3xyz/assets.git';
 export const MAP3XYZ_CLONED_REPO_LOC = path.join(DEFAULT_TEMP_DIR, 'map3xyz-assets');

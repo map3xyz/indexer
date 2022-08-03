@@ -3,7 +3,7 @@
         "name": "aave-ethereum-tokenlist",
         "network": "ethereum",
         "type": "tokenlist",
-        "source": "https://bafybeick5mozllkwessstgvebwvqcallrkoiiakrl3agh2lghwapg53dmy.ipfs.dweb.link",
+        "source": "https://wispy-bird-88a7.uniswap.workers.dev/?url=http://tokenlist.aave.eth.link",
         "verified": false
     },
     {
@@ -14,10 +14,10 @@
         "verified": false
     },
     {
-        "name": "gemini-tokenlist",
+        "name": "cmc-ethereum-stablecoin-tokenlist",
         "network": "ethereum",
         "type": "tokenlist",
-        "source": "https://www.gemini.com/uniswap/manifest.json",
+        "source": "https://wispy-bird-88a7.uniswap.workers.dev/?url=http://stablecoin.cmc.eth.link",
         "verified": false
     }
 ]

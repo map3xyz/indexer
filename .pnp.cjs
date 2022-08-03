@@ -33,7 +33,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         [null, {\
           "packageLocation": "./",\
           "packageDependencies": [\
-            ["@map3xyz/assets-helper", "npm:1.0.78"],\
+            ["@map3xyz/assets-helper", "npm:1.0.81"],\
             ["@types/node", "npm:18.0.0"],\
             ["@uniswap/token-lists", "npm:1.0.0-beta.30"],\
             ["ava", "virtual:33e9ebc44ad420cf779b22e2404c1cc3e69678f6a230c028c5a5096d5b3cb9a1f57451a1ef4d3173a4ee86a475bf674707b77dfa88833a33b61d80ca58bdda1a#npm:4.3.0"],\
@@ -135,15 +135,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["@map3xyz/assets-helper", [\
-        ["npm:1.0.78", {\
-          "packageLocation": "./.yarn/cache/@map3xyz-assets-helper-npm-1.0.78-77aea4da7c-c3778354f4.zip/node_modules/@map3xyz/assets-helper/",\
+        ["npm:1.0.81", {\
+          "packageLocation": "./.yarn/cache/@map3xyz-assets-helper-npm-1.0.81-2b1ee6c08a-001a4340b4.zip/node_modules/@map3xyz/assets-helper/",\
           "packageDependencies": [\
-            ["@map3xyz/assets-helper", "npm:1.0.78"],\
+            ["@map3xyz/assets-helper", "npm:1.0.81"],\
             ["@uniswap/token-lists", "npm:1.0.0-beta.30"],\
             ["axios", "npm:0.27.2"],\
             ["jsonschema", "npm:1.4.1"],\
             ["shelljs", "npm:0.8.5"],\
-            ["sqlite3", "virtual:77aea4da7caa211daf4525d26969da547debcbcbf40385aa2a0df209a412a6d024f212d190864ab0a92f06e82a359262d123feb5fde60ac0c5a99c3d681afd3b#npm:5.0.10"],\
+            ["sqlite3", "virtual:2b1ee6c08a2dd87fa86ada79e226311a68b21ca9036ca7c3424bc9d0d3cbc5e08ed6d3845609b92f359d7dced6adf30bfa59ffc3eda7e8348c737248022f3b58#npm:5.0.10"],\
             ["uuid", "npm:8.3.2"]\
           ],\
           "linkType": "HARD"\
@@ -154,7 +154,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./",\
           "packageDependencies": [\
             ["@map3xyz/indexer", "workspace:."],\
-            ["@map3xyz/assets-helper", "npm:1.0.78"],\
+            ["@map3xyz/assets-helper", "npm:1.0.81"],\
             ["@types/node", "npm:18.0.0"],\
             ["@uniswap/token-lists", "npm:1.0.0-beta.30"],\
             ["ava", "virtual:33e9ebc44ad420cf779b22e2404c1cc3e69678f6a230c028c5a5096d5b3cb9a1f57451a1ef4d3173a4ee86a475bf674707b77dfa88833a33b61d80ca58bdda1a#npm:4.3.0"],\
@@ -3323,16 +3323,16 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
       ]],\
       ["sqlite3", [\
         ["npm:5.0.10", {\
-          "packageLocation": "./.yarn/unplugged/sqlite3-virtual-57fb59bfdb/node_modules/sqlite3/",\
+          "packageLocation": "./.yarn/unplugged/sqlite3-virtual-b69f247d82/node_modules/sqlite3/",\
           "packageDependencies": [\
             ["sqlite3", "npm:5.0.10"]\
           ],\
           "linkType": "SOFT"\
         }],\
-        ["virtual:77aea4da7caa211daf4525d26969da547debcbcbf40385aa2a0df209a412a6d024f212d190864ab0a92f06e82a359262d123feb5fde60ac0c5a99c3d681afd3b#npm:5.0.10", {\
-          "packageLocation": "./.yarn/unplugged/sqlite3-virtual-57fb59bfdb/node_modules/sqlite3/",\
+        ["virtual:2b1ee6c08a2dd87fa86ada79e226311a68b21ca9036ca7c3424bc9d0d3cbc5e08ed6d3845609b92f359d7dced6adf30bfa59ffc3eda7e8348c737248022f3b58#npm:5.0.10", {\
+          "packageLocation": "./.yarn/unplugged/sqlite3-virtual-b69f247d82/node_modules/sqlite3/",\
           "packageDependencies": [\
-            ["sqlite3", "virtual:77aea4da7caa211daf4525d26969da547debcbcbf40385aa2a0df209a412a6d024f212d190864ab0a92f06e82a359262d123feb5fde60ac0c5a99c3d681afd3b#npm:5.0.10"],\
+            ["sqlite3", "virtual:2b1ee6c08a2dd87fa86ada79e226311a68b21ca9036ca7c3424bc9d0d3cbc5e08ed6d3845609b92f359d7dced6adf30bfa59ffc3eda7e8348c737248022f3b58#npm:5.0.10"],\
             ["@mapbox/node-pre-gyp", "npm:1.0.9"],\
             ["@types/node-gyp", null],\
             ["node-addon-api", "npm:4.3.0"],\
