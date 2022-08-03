@@ -12,12 +12,5 @@
         "type": "tokenlist",
         "source": "https://raw.githubusercontent.com/maticnetwork/polygon-token-list/master/src/tokens/default.json",
         "verified": false
-    },
-    {
-        "name": "cmc-ethereum-stablecoin-tokenlist",
-        "network": "ethereum",
-        "type": "tokenlist",
-        "source": "https://wispy-bird-88a7.uniswap.workers.dev/?url=http://stablecoin.cmc.eth.link",
-        "verified": false
     }
 ]
