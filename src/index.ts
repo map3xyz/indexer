@@ -6,6 +6,10 @@ console.log('Running indexer tasks...');
 
 runIndexerTasks()
 .then(results => {
+  if(results.length === 0) {
+    console.log('No new indexing results were found.');
+  }
+
   for(const result of results) {
     console.log(`${result.network}: ${result.type} ${result.source} ${result.verified ? 'verified' : 'not verified'}`);
   }
