@@ -19,5 +19,12 @@
         "type": "tokenlist",
         "source": "https://wispy-bird-88a7.uniswap.workers.dev/?url=http://stablecoin.cmc.eth.link",
         "verified": false
+    },
+    {
+        "name": "trustwallet-polygon",
+        "network": "polygon",
+        "type": "trustwallet",
+        "source": null,
+        "verified": false
     }
 ]

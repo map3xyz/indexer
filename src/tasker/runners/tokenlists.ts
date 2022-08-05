@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { TokenList } from '@uniswap/token-lists'
-import { getChainIdForNetwork } from '../../utils/networks';
+import { getChainIdForNetwork } from '@map3xyz/assets-helper';
 
 async function fetchTokenlist(url: string): Promise<TokenList> {
     try {
