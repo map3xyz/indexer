@@ -28,7 +28,7 @@ export async function fetchTokenlistForNetwork(source: string, network: string, 
         } 
 
         // @ts-ignore
-        tokenlist.tokens = tokenlist.tokens.filter(token => token.chainId === chainId);
+        tokenlist.tokens = tokenlist.tokens.filter(token => !token.chainId || token.chainId === chainId);
 
         return tokenlist;
     } catch (err) {
