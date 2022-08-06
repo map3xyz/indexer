@@ -1,37 +1,7 @@
 
 
 import { getNetworks, NetworkInfo } from '@map3xyz/assets-helper';
-let chainIdMap;
 let networks: NetworkInfo[];
-
-async function getChainIdMap() {
-    try {
-        if (chainIdMap && Object.keys(chainIdMap).length > 0) {
-            return chainIdMap;
-        }
-    
-        networks = await getNetworks();
-        chainIdMap = {};
-        networks.forEach(network => {
-            chainIdMap[network.name.toLowerCase()] = network.identifiers.chainId;
-        });
-
-        return chainIdMap;
-    } catch (err) {
-        throw err;
-    }
-}
-export async function getChainIdForNetwork(network: string): Promise<number> {
-    try {
-        if(!chainIdMap) {
-            chainIdMap = await getChainIdMap();
-        }
-    
-        return chainIdMap[network.toLowerCase()];
-    } catch (err) {
-        throw err;
-    }
-}
 
 export async function getNetworkByName(network: string): Promise<NetworkInfo> {
     try {

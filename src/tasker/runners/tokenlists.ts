@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { TokenList } from '@uniswap/token-lists'
-import { getChainIdForNetwork } from '../../utils/networks';
+import { getChainIdForNetwork } from '@map3xyz/assets-helper';
 
 async function fetchTokenlist(url: string): Promise<TokenList> {
     try {
@@ -28,7 +28,7 @@ export async function fetchTokenlistForNetwork(source: string, network: string, 
         } 
 
         // @ts-ignore
-        tokenlist.tokens = tokenlist.tokens.filter(token => token.chainId === chainId);
+        tokenlist.tokens = tokenlist.tokens.filter(token => !token.chainId || token.chainId === chainId);
 
         return tokenlist;
     } catch (err) {
