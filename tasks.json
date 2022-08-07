@@ -26,5 +26,12 @@
         "type": "trustwallet",
         "source": null,
         "verified": false
+    },
+    {
+        "name": "trustwallet-ethereum",
+        "network": "ethereum",
+        "type": "trustwallet",
+        "source": null,
+        "verified": false
     }
 ]
