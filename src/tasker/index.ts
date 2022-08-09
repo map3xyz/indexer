@@ -1,11 +1,12 @@
 import path from "path";
-import { readAndParseJson, getRandomBranchNameForNetworkName, persistJsonFile, push, ingestTokenList, cloneOrPullRepoAndUpdateSubmodules} from '@map3xyz/assets-helper';
+import { readAndParseJson, getRandomBranchNameForNetworkName, persistJsonFile, push, ingestTokenList, cloneOrPullRepoAndUpdateSubmodules, commit } from '@map3xyz/assets-helper';
 import { IndexResult } from "./model/IndexResult";
 import { IndexerCommandValidationResult, PlannedTasks } from "./model/types";
 import { NetworkTask, NetworkTokenlistTaskResult } from "./model/NetworkTask";
 import fs from 'fs';
 import { MAP3XYZ_CLONED_REPO_LOC, MAP3XYZ_REPO, TEST_REGENERATE_MODE, TRUSTWALLET_CLONED_REPO_LOC, TRUSTWALLET_REPO } from "../utils/constants";
 import { runTask } from "./runners";
+import { needBeUpdateImagesForSubmodule } from "./images-updater";
 
 function validateTaskParams(network: string, type: string): IndexerCommandValidationResult {
     const tasks = readAndParseJson(path.join(__dirname, '../../', 'tasks.json'));
@@ -93,7 +94,7 @@ export async function runIndexerTasks(network?: string, type?: string): Promise<
         await Promise.all(networkTasks.map((network => {
             return new Promise<void>(async resolve => {
                 
-                let foundNewAssets = false;
+                let foundNewAssets = false, hasImprovementsToCommit = false;
                 const newTokenlistFoundResults: NetworkTokenlistTaskResult[] = [];
 
                 for(const task of network.tasks) {
@@ -153,6 +154,13 @@ export async function runIndexerTasks(network?: string, type?: string): Promise<
                     
                     // TODO: validate repo is clean 
 
+                    // fetch any new images to download
+                    hasImprovementsToCommit = await needBeUpdateImagesForSubmodule(networkDir, network.network);
+
+                    if(hasImprovementsToCommit) {
+                        await commit(networkDir, `Updating missing images for ${network.network}`);
+                    }
+                    
                     // push new branch
                     if(!TEST_REGENERATE_MODE) {
                         await push(networkDir, newBranchName);
