@@ -1,6 +1,6 @@
 import { TokenInfo, TokenList } from '@uniswap/token-lists';
-import { cloneOrPullRepoAndUpdateSubmodules } from '@map3xyz/assets-helper';
-import { DEFAULT_TEMP_DIR, TRUSTWALLET_REPO } from './../../utils/config';
+import { cloneOrPullRepoAndUpdateSubmodules, getDirectories, getChainIdForNetwork } from '@map3xyz/assets-helper';
+import { DEFAULT_TEMP_DIR, TRUSTWALLET_REPO, TWA_USER_CONTENT_BASE } from '../../utils/constants';
 import path from 'path';
 import fs from 'fs';
 
@@ -26,7 +26,36 @@ export async function getTokenlistFromTrustWallet(network: string): Promise<Toke
             throw new Error(`Tokenlist file not found for network ${network} on trustwallet`);
         }
 
-        return JSON.parse(fs.readFileSync(tokenlistFile, 'utf8')) as TokenList;
+        const tokenList = JSON.parse(fs.readFileSync(tokenlistFile, 'utf8')) as TokenList;
+
+        const assetDirectory = path.join(getTwaInstanceDirectory(), 'blockchains', network, 'assets');
+        const assetDirs = await getDirectories(assetDirectory);
+        const chainId = await getChainIdForNetwork(network);
+
+        for (const assetDir of assetDirs) {
+            const address = assetDir.split('/')[assetDir.split('/').length - 1];
+            if(!address.toLowerCase().startsWith('0x')) {
+                continue;
+            }
+            const info = JSON.parse(fs.readFileSync(path.join(assetDir, 'info.json'), 'utf8'));
+
+            const tokenInTokenlist = tokenList.tokens.find(token => token.address === address);
+            const logoHttpPath = `${TWA_USER_CONTENT_BASE}/blockchains/${network}/assets/${address}/logo.png`;
+
+            if(!tokenInTokenlist) {
+                tokenList.tokens.push({
+                    chainId: chainId,
+                    address: address,
+                    name: info.name,
+                    decimals: info.decimals,
+                    symbol: info.symbol,                  
+                    logoURI: logoHttpPath,
+                    tags: info.tags
+                })
+            }
+        }
+
+        return tokenList;
     } catch (err) {
         throw err;
     }

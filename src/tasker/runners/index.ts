@@ -1,7 +1,7 @@
 import { NetworkTask, NetworkTokenlistTaskResult } from "../model/NetworkTask";
 import { fetchTokenlistForNetwork } from "./tokenlists";
 import { getTokenlistFromTrustWallet } from "./trustwallet";
-import { getChainIdForNetwork } from '@map3xyz/assets-helper';
+import { getChainIdForNetwork, formatAddress } from '@map3xyz/assets-helper';
 
 export async function runTask(task: NetworkTask): Promise<NetworkTokenlistTaskResult> {
     try {
@@ -25,11 +25,12 @@ export async function runTask(task: NetworkTask): Promise<NetworkTokenlistTaskRe
         
 
         // attach ChainIds to tokens if they're missing
-
+        // also format addresses properly 
         tokenlist.tokens = tokenlist.tokens.map(t => { 
             if(!t.chainId && chainId) {
                 t.chainId = chainId
             }
+            t.address = formatAddress(t.address);
             return t;
         });
 
