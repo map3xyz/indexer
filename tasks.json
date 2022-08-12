@@ -47,5 +47,12 @@
     "type": "trustwallet",
     "source": null,
     "verified": false
+  },
+  {
+    "name": "trustwallet-optimism",
+    "network": "optimism",
+    "type": "trustwallet",
+    "source": null,
+    "verified": false
   }
 ]
