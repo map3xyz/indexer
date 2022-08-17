@@ -96,5 +96,12 @@
     "type": "trustwallet",
     "source": null,
     "verified": false
+  },
+  {
+    "name": "trustwallet-kcc",
+    "network": "kcc",
+    "type": "trustwallet",
+    "source": null,
+    "verified": false
   }
 ]
