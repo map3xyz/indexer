@@ -124,5 +124,12 @@
     "type": "trustwallet",
     "source": null,
     "verified": false
+  },
+  {
+    "name": "trustwallet-ronin",
+    "network": "ronin",
+    "type": "trustwallet",
+    "source": null,
+    "verified": false
   }
 ]
