@@ -82,5 +82,12 @@
     "type": "trustwallet",
     "source": null,
     "verified": false
+  },
+  {
+    "name": "trustwallet-gochain",
+    "network": "gochain",
+    "type": "trustwallet",
+    "source": null,
+    "verified": false
   }
 ]
