@@ -54,5 +54,19 @@
     "type": "trustwallet",
     "source": null,
     "verified": false
+  },
+  {
+    "name": "trustwallet-avalanchec",
+    "network": "avalanchec",
+    "type": "trustwallet",
+    "source": null,
+    "verified": false
+  },
+  {
+    "name": "trustwallet-celo",
+    "network": "celo",
+    "type": "trustwallet",
+    "source": null,
+    "verified": false
   }
 ]
