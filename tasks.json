@@ -138,5 +138,12 @@
     "type": "trustwallet",
     "source": null,
     "verified": false
+  },
+  {
+    "name": "trustwallet-thundertoken",
+    "network": "thundertoken",
+    "type": "trustwallet",
+    "source": null,
+    "verified": false
   }
 ]
