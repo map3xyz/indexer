@@ -68,5 +68,12 @@
     "type": "trustwallet",
     "source": null,
     "verified": false
+  },
+  {
+    "name": "trustwallet-aurora",
+    "network": "aurora",
+    "type": "trustwallet",
+    "source": null,
+    "verified": false
   }
 ]
