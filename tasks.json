@@ -110,5 +110,12 @@
     "type": "trustwallet",
     "source": null,
     "verified": false
+  },
+  {
+    "name": "trustwallet-oasis",
+    "network": "oasis",
+    "type": "trustwallet",
+    "source": null,
+    "verified": false
   }
 ]
