@@ -145,5 +145,12 @@
     "type": "trustwallet",
     "source": null,
     "verified": false
+  },
+  {
+    "name": "trustwallet-tomochain",
+    "network": "tomochain",
+    "type": "trustwallet",
+    "source": null,
+    "verified": false
   }
 ]
