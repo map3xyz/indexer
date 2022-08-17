@@ -152,5 +152,12 @@
     "type": "trustwallet",
     "source": null,
     "verified": false
+  },
+  {
+    "name": "trustwallet-wanchain",
+    "network": "wanchain",
+    "type": "trustwallet",
+    "source": null,
+    "verified": false
   }
 ]
