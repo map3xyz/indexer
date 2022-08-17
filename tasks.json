@@ -103,5 +103,12 @@
     "type": "trustwallet",
     "source": null,
     "verified": false
+  },
+  {
+    "name": "trustwallet-meter",
+    "network": "meter",
+    "type": "trustwallet",
+    "source": null,
+    "verified": false
   }
 ]
