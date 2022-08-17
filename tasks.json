@@ -117,5 +117,12 @@
     "type": "trustwallet",
     "source": null,
     "verified": false
+  },
+  {
+    "name": "trustwallet-okc",
+    "network": "okc",
+    "type": "trustwallet",
+    "source": null,
+    "verified": false
   }
 ]
