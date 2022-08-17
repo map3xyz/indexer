@@ -159,5 +159,12 @@
     "type": "trustwallet",
     "source": null,
     "verified": false
+  },
+  {
+    "name": "trustwallet-xdai",
+    "network": "xdai",
+    "type": "trustwallet",
+    "source": null,
+    "verified": false
   }
 ]
