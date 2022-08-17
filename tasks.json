@@ -75,5 +75,12 @@
     "type": "trustwallet",
     "source": null,
     "verified": false
+  },
+  {
+    "name": "trustwallet-classic",
+    "network": "classic",
+    "type": "trustwallet",
+    "source": null,
+    "verified": false
   }
 ]
