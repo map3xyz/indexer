@@ -32,7 +32,17 @@ export function needBeUpdateImagesForSubmodule(dir: string, network: string): Pr
                 if(!address.toLowerCase().startsWith('0x')) {
                     continue;
                 }
-                const infoJson = JSON.parse(fs.readFileSync(path.join(assetDir, 'info.json'), 'utf8'));
+
+
+                let infoJson;
+
+                try {
+                    infoJson = JSON.parse(fs.readFileSync(path.join(assetDir, 'info.json'), 'utf8'));
+                } catch(err) {
+                    console.log(`${assetDir}: does not have an info.json file. Skipping for needBeUpdateImagesForSubmodule`);
+                    continue;
+                }
+                
                 const asset = new Asset(infoJson);
                 
                 if(asset.logo?.png || asset.logo?.svg) {
