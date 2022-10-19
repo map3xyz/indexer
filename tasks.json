@@ -7,10 +7,10 @@
     "verified": false
   },
   {
-    "name": "polygon-default-tokenlist",
+    "name": "polygon-tokens-tokenlist",
     "network": "polygon",
     "type": "tokenlist",
-    "source": "https://raw.githubusercontent.com/maticnetwork/polygon-token-list/master/src/tokens/default.json",
+    "source": "https://api-polygon-tokens.polygon.technology/tokenlists/polygonTokens.tokenlist.json",
     "verified": false
   },
   {
