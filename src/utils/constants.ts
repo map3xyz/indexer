@@ -4,7 +4,6 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-
 export const TEST_REGENERATE_MODE = false; // Do not turn on as it's buggy generating empty in.json files
 export const DEFAULT_TEMP_DIR = './tmp';
 export const MAP3XYZ_REPO = 'git@github.com:map3xyz/assets.git';
