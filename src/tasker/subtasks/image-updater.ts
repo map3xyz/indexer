@@ -24,7 +24,7 @@ export function needBeUpdateImagesForSubmodule(dir: string, network: string): Pr
 
         let networkDirHasChangesToCommit = false, assetsSubmoduleHasChangesToCommit = false;
 
-        console.log('Checking for missing images for network: ' + network);
+        // console.log('Checking for missing images for network: ' + network);
         try {
             const assetsDirs = await getDirectories(dir);
 
@@ -33,7 +33,6 @@ export function needBeUpdateImagesForSubmodule(dir: string, network: string): Pr
                 if(!address.toLowerCase().startsWith('0x')) {
                     continue;
                 }
-
 
                 let infoJson;
 

@@ -146,7 +146,7 @@ export async function runIndexerTasks(network?: string, type?: string): Promise<
                     }
                 }
             
-                const networkDir = path.join(getRepoDirForNetwork(network.network), 'assets',`${network.network}-tokenlist`);
+                const networkDir = getRepoDirForNetwork(network.network);
                 // note: assetDir might not exist in the FS
                 const assetsDir = path.join(networkDir, 'assets', `${network.network}-tokenlist`)
                 const newBranchName = getRandomBranchNameForNetworkName(network.network);
@@ -166,37 +166,38 @@ export async function runIndexerTasks(network?: string, type?: string): Promise<
                 }
                     
                 // fetch any new images to download
-                const imagesSubTaskResult = await needBeUpdateImagesForSubmodule(networkDir, network.network);
+                const imagesSubTaskResult = await needBeUpdateImagesForSubmodule(assetsDir, network.network);
                 
                 if(imagesSubTaskResult.networkDirHasChangesToCommit) {
-                    await commit(networkDir, `Updating missing images for ${network.network}`);
+                    await commit(networkDir, `Updating missing images for ${network.network}`, newBranchName);
                 }
 
                 if(imagesSubTaskResult.assetsSubmoduleHasChangesToCommit) {
-                    await commit(assetsDir, `Updating missing images for assets in ${network.network}`);
+                    await commit(assetsDir, `Updating missing images for assets in ${network.network}`, newBranchName);
                 }
                 
-                // verify if any of the assets have been verified via TCRs
-                const tcrVerificationsSubtaskResult = await syncTcrVerifications(networkDir, network.network);
+                // // verify if any of the assets have been verified via TCRs
+                // const tcrVerificationsSubtaskResult = await syncTcrVerifications(networkDir, network.network);
 
-                if(tcrVerificationsSubtaskResult.networkDirHasChangesToCommit) {
-                    await commit(networkDir, `Syncing TCR Verifications for network: ${network.network}`);
-                }
+                // if(tcrVerificationsSubtaskResult.networkDirHasChangesToCommit) {
+                //     await commit(networkDir, `Syncing TCR Verifications for network: ${network.network}`, newBranchName);
+                // }
 
-                if(tcrVerificationsSubtaskResult.assetsSubmoduleHasChangesToCommit) {
-                    await commit(assetsDir, `Syncing TCR Verifications for assets in ${network.network}`);
-                }
+                // if(tcrVerificationsSubtaskResult.assetsSubmoduleHasChangesToCommit) {
+                //     await commit(assetsDir, `Syncing TCR Verifications for assets in ${network.network}`, newBranchName);
+                // }
                 
                 // push new branch
                 if(!TEST_REGENERATE_MODE) {
-                    if(imagesSubTaskResult.networkDirHasChangesToCommit || 
-                        tcrVerificationsSubtaskResult.networkDirHasChangesToCommit) {
+                    if(imagesSubTaskResult.networkDirHasChangesToCommit) {
+                        // || tcrVerificationsSubtaskResult.networkDirHasChangesToCommit) {
+                        
                         await push(networkDir, newBranchName);
                     }
                     
                     if(foundNewAssets || 
-                        imagesSubTaskResult.assetsSubmoduleHasChangesToCommit || 
-                        tcrVerificationsSubtaskResult.assetsSubmoduleHasChangesToCommit) {
+                        imagesSubTaskResult.assetsSubmoduleHasChangesToCommit) {
+                            // || tcrVerificationsSubtaskResult.assetsSubmoduleHasChangesToCommit) {
                             await push(assetsDir, newBranchName);
                     }
                 }                
