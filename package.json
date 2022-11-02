@@ -17,7 +17,7 @@
     "!dist/**/*.test.js"
   ],
   "scripts": {
-    "indexer": "yarn ts-node ./src/index.ts",
+    "indexer": "ts-node ./src/index.ts",
     "clean": "rimraf ./dist/ ./exec/",
     "build": "yarn clean && tsc",
     "preparePublish": "yarn build && npm version patch",
@@ -33,9 +33,10 @@
     "typescript": "^4.7.4"
   },
   "dependencies": {
-    "@map3xyz/assets-helper": "^1.0.130",
+    "@map3xyz/assets-helper": "^1.0.158",
     "@uniswap/token-lists": "^1.0.0-beta.30",
     "axios": "^0.27.2",
+    "dotenv": "^16.0.2",
     "jsonschema": "^1.4.1"
   },
   "packageManager": "yarn@3.2.1",

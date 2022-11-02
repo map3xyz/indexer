@@ -9,21 +9,22 @@
  *  - if SVG and no PNG, convert to PNG
  */
 
-import path, { resolve } from "path";
+import path from "path";
 import fs from "fs";
 import { TRUSTWALLET_CLONED_REPO_LOC, TWA_USER_CONTENT_BASE } from "../../utils/constants";
-import { getDirectories, downloadAndPersistLogos, Logos, Asset } from "@map3xyz/assets-helper";
+import { getDirectories, Logos, Asset } from "@map3xyz/assets-helper";
+import { SubtaskResult } from "..";
 
-export function needBeUpdateImagesForSubmodule(dir: string, network: string): Promise<boolean> { 
-    return new Promise<boolean>(async (resolve, reject) => {
+export function needBeUpdateImagesForSubmodule(dir: string, network: string): Promise<SubtaskResult> { 
+    return new Promise<SubtaskResult>(async (resolve, reject) => {
 
         if(!fs.existsSync(dir)) {
             reject(new Error(`Directory ${dir} does not exist`));
         }
 
-        let hasImprovementsToCommit = false;
+        let networkDirHasChangesToCommit = false, assetsSubmoduleHasChangesToCommit = false;
 
-        console.log('Checking for missing images for network: ' + network);
+        // console.log('Checking for missing images for network: ' + network);
         try {
             const assetsDirs = await getDirectories(dir);
 
@@ -32,7 +33,16 @@ export function needBeUpdateImagesForSubmodule(dir: string, network: string): Pr
                 if(!address.toLowerCase().startsWith('0x')) {
                     continue;
                 }
-                const infoJson = JSON.parse(fs.readFileSync(path.join(assetDir, 'info.json'), 'utf8'));
+
+                let infoJson;
+
+                try {
+                    infoJson = JSON.parse(fs.readFileSync(path.join(assetDir, 'info.json'), 'utf8'));
+                } catch(err) {
+                    console.log(`${assetDir}: does not have an info.json file. Skipping for needBeUpdateImagesForSubmodule`);
+                    continue;
+                }
+                
                 const asset = new Asset(infoJson);
                 
                 if(asset.logo?.png || asset.logo?.svg) {
@@ -52,15 +62,19 @@ export function needBeUpdateImagesForSubmodule(dir: string, network: string): Pr
                     await asset.logo.downloadAndPersistLogos(assetDir);
                     
                     fs.writeFileSync(path.join(assetDir, 'info.json'), asset.deserialise());
-                    hasImprovementsToCommit = true;
+                    assetsSubmoduleHasChangesToCommit = true;
                 } catch (err) { 
                     console.error(`needBeUpdateImagesForSubmodule logoTwaHttpPath download or write error ${err}`)
                 }
                 
             }
             console.log('Checked for missing images for network: ' + network + 
-                (hasImprovementsToCommit ? '. Found some 🙌' : '. No improvements found'));
-            resolve(hasImprovementsToCommit);
+                (assetsSubmoduleHasChangesToCommit ? '. Found some 🙌' : '. No improvements found'));
+            
+            resolve({
+                networkDirHasChangesToCommit,
+                assetsSubmoduleHasChangesToCommit
+            });
         } catch (err) {
             reject(err);
         }

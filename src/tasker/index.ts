@@ -6,7 +6,9 @@ import { NetworkTask, NetworkTokenlistTaskResult } from "./model/NetworkTask";
 import fs from 'fs';
 import { MAP3XYZ_CLONED_REPO_LOC, MAP3XYZ_REPO, TEST_REGENERATE_MODE, TRUSTWALLET_CLONED_REPO_LOC, TRUSTWALLET_REPO } from "../utils/constants";
 import { runTask } from "./runners";
-import { needBeUpdateImagesForSubmodule } from "./images-updater";
+import { needBeUpdateImagesForSubmodule } from "./subtasks/image-updater";
+import { syncTcrVerifications } from "./subtasks/tcr-verifier";
+import { deleteAllFilesInDirectory } from "../utils";
 
 function validateTaskParams(network: string, type: string): IndexerCommandValidationResult {
     const tasks = readAndParseJson(path.join(__dirname, '../../', 'tasks.json'));
@@ -78,6 +80,11 @@ function getRepoDirForNetwork(network: string): string {
     return path.join(MAP3XYZ_CLONED_REPO_LOC, 'networks', network);
 }
 
+export interface SubtaskResult {
+    networkDirHasChangesToCommit: boolean;
+    assetsSubmoduleHasChangesToCommit: boolean;
+}
+
 export async function runIndexerTasks(network?: string, type?: string): Promise<IndexResult[]> {
 
     try {
@@ -94,7 +101,7 @@ export async function runIndexerTasks(network?: string, type?: string): Promise<
         await Promise.all(networkTasks.map((network => {
             return new Promise<void>(async resolve => {
                 
-                let foundNewAssets = false, hasImprovementsToCommit = false;
+                let foundNewAssets = false;
                 const newTokenlistFoundResults: NetworkTokenlistTaskResult[] = [];
 
                 for(const task of network.tasks) {
@@ -139,39 +146,64 @@ export async function runIndexerTasks(network?: string, type?: string): Promise<
                     }
                 }
             
-                // TODO; abstract away for more than one submodule
-                const networkDir = path.join(getRepoDirForNetwork(network.network), 'assets',`${network.network}-tokenlist`);
+                const networkDir = getRepoDirForNetwork(network.network);
+                // note: assetDir might not exist in the FS
+                const assetsDir = path.join(networkDir, 'assets', `${network.network}-tokenlist`)
+                const newBranchName = getRandomBranchNameForNetworkName(network.network);
                 
                 // if there are new ones to add and new branch has not been created (foundnewassets=false), create a new branch
                 if(foundNewAssets || TEST_REGENERATE_MODE) {
-                    const newBranchName = getRandomBranchNameForNetworkName(network.network);
+                    if(TEST_REGENERATE_MODE) {
+                        console.log(`🚨 TEST MODE: Regenerating all assets for network ${network.network}`);
+                        await deleteAllFilesInDirectory(assetsDir);
+                    }
                     for (const result of newTokenlistFoundResults) {
                         const file = persistJsonFile(result.tokenlist);
                         // Ingest the new ones and their props/files/logos to disk. Transform to map3 tokenlist format
                         // commit with a nice commit message that allows us to parse what's been done programmatically
                         await ingestTokenList(file, networkDir, newBranchName, result.taskType)
                     }
+                }
                     
-                    // TODO: validate repo is clean 
+                // fetch any new images to download
+                const imagesSubTaskResult = await needBeUpdateImagesForSubmodule(assetsDir, network.network);
+                
+                if(imagesSubTaskResult.networkDirHasChangesToCommit) {
+                    await commit(networkDir, `Updating missing images for ${network.network}`, newBranchName);
+                }
 
-                    // fetch any new images to download
-                    hasImprovementsToCommit = await needBeUpdateImagesForSubmodule(networkDir, network.network);
+                if(imagesSubTaskResult.assetsSubmoduleHasChangesToCommit) {
+                    await commit(assetsDir, `Updating missing images for assets in ${network.network}`, newBranchName);
+                }
+                
+                // // verify if any of the assets have been verified via TCRs
+                // const tcrVerificationsSubtaskResult = await syncTcrVerifications(networkDir, network.network);
 
-                    if(hasImprovementsToCommit) {
-                        await commit(networkDir, `Updating missing images for ${network.network}`);
-                    }
-                    
-                    // push new branch
-                    if(!TEST_REGENERATE_MODE) {
+                // if(tcrVerificationsSubtaskResult.networkDirHasChangesToCommit) {
+                //     await commit(networkDir, `Syncing TCR Verifications for network: ${network.network}`, newBranchName);
+                // }
+
+                // if(tcrVerificationsSubtaskResult.assetsSubmoduleHasChangesToCommit) {
+                //     await commit(assetsDir, `Syncing TCR Verifications for assets in ${network.network}`, newBranchName);
+                // }
+                
+                // push new branch
+                if(!TEST_REGENERATE_MODE) {
+                    if(imagesSubTaskResult.networkDirHasChangesToCommit) {
+                        // || tcrVerificationsSubtaskResult.networkDirHasChangesToCommit) {
+                        
                         await push(networkDir, newBranchName);
                     }
-
-                    // TODO: open pull request
-                }
+                    
+                    if(foundNewAssets || 
+                        imagesSubTaskResult.assetsSubmoduleHasChangesToCommit) {
+                            // || tcrVerificationsSubtaskResult.assetsSubmoduleHasChangesToCommit) {
+                            await push(assetsDir, newBranchName);
+                    }
+                }                
 
                 resolve();
             });
-            // TODO: delay/wait 30s, revert to master, pull lastest and terminate (to allow for remote validation and auto merging)
         })));
     
         return sourceIndexResults;

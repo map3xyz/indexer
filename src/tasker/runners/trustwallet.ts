@@ -22,11 +22,22 @@ export async function getTokenlistFromTrustWallet(network: string): Promise<Toke
         // TODO: handle case where we need to map the network name from map3 to the trustwallet network name (or network dir name).. perhaps use the source config field?
         const tokenlistFile = path.join(getTwaInstanceDirectory(), 'blockchains', network, 'tokenlist.json');
 
-        if(!fs.existsSync(tokenlistFile)) {
-            throw new Error(`Tokenlist file not found for network ${network} on trustwallet`);
-        }
+        let tokenList: TokenList;
 
-        const tokenList = JSON.parse(fs.readFileSync(tokenlistFile, 'utf8')) as TokenList;
+        if(fs.existsSync(tokenlistFile)) {
+            tokenList = JSON.parse(fs.readFileSync(tokenlistFile, 'utf8')) as TokenList;
+        } else {
+            tokenList = {
+                name: `trustwallet-${network}-tokenlist`,
+                timestamp: new Date().toISOString(),
+                version: {
+                    major: 0,
+                    minor: 0,
+                    patch: 1
+                },
+                tokens: []            
+            }
+        }
 
         const assetDirectory = path.join(getTwaInstanceDirectory(), 'blockchains', network, 'assets');
         const assetDirs = await getDirectories(assetDirectory);
